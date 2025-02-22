@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <title>Dashboard</title>
+</head>
+<body>
+    <h2>Bem-vindo, {{ current_user.username }}</h2>
+    <a href="{{ url_for('auth.logout') }}">Sair</a>
+
+    {% if current_user.role == 'discente' %}
+        <h3>Suas Notas</h3>
+        <ul>
+            {% for grade in grades %}
+                <li>{{ grade.subject }}: {{ grade.grade }}</li>
+            {% endfor %}
+        </ul>
+
+        <h3>Reclamações</h3>
+        <ul>
+            {% for complaint in complaints %}
+                <li>{{ complaint.justification }} - {{ complaint.status }}</li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <h3>Reclamações de Discentes</h3>
+        <ul>
+            {% for complaint in complaints %}
+                <li>{{ complaint.justification }} - {{ complaint.status }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+</body>
+</html>

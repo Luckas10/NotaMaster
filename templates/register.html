@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <title>Cadastro</title>
+</head>
+<body>
+    <h2>Cadastro</h2>
+    <form method="POST">
+        <input type="text" name="username" placeholder="Usuário" required>
+        <input type="password" name="password" placeholder="Senha" required>
+        <select name="role">
+            <option value="discente">Discente</option>
+            <option value="docente">Docente</option>
+        </select>
+        <button type="submit">Cadastrar</button>
+    </form>
+    <a href="{{ url_for('auth.login') }}">Já tem conta? Faça login</a>
+</body>
+</html>
