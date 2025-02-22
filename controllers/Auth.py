@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash
-from database import db
+from database import Session
 from models.User import User
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import login_user, logout_user, login_required
@@ -11,7 +11,8 @@ def login():
     if request.method == 'POST':
         username = request.form['username']
         password = request.form['password']
-        user = User.query.filter_by(username=username).first()
+        session = Session()
+        user = session.query(User).filter_by(username=username).first()
 
         if user and check_password_hash(user.password, password):
             login_user(user)
@@ -28,9 +29,10 @@ def register():
         password = generate_password_hash(request.form['password'], method='pbkdf2:sha256')
         role = request.form['role']  # 'discente' ou 'docente'
 
+        session = Session()
         new_user = User(username=username, password=password, role=role)
-        db.session.add(new_user)
-        db.session.commit()
+        session.add(new_user)
+        session.commit()
 
         flash('Cadastro realizado com sucesso!', 'success')
         return redirect(url_for('auth.login'))
