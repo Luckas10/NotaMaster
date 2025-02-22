@@ -11,7 +11,7 @@
         <h3>Suas Notas</h3>
         <ul>
             {% for grade in grades %}
-                <li>{{ grade.subject }}: {{ grade.grade }}</li>
+                <li>{{ grade.subject.name }}: {{ grade.grade }}</li>
             {% endfor %}
         </ul>
 

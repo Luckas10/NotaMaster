@@ -4,7 +4,7 @@ from database import Base
 from flask_login import UserMixin
 
 class User(Base, UserMixin):
-    __tablename__ = 'user'
+    __tablename__ = 'users'
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
     username: Mapped[str] = mapped_column(String(150), unique=True, nullable=False)
