@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash
 from database import Session
 from models.User import User
-from models.Subject import Subject  # Novo modelo Subject
+from models.Subject import Subject
 from models.Grade import Grade
 from flask_login import login_required, current_user
 
@@ -18,21 +18,18 @@ def add_grade():
 
     # Carregar todos os discentes
     students = session.query(User).filter_by(role='discente').all()
-
     # Carregar todas as disciplinas
     subjects = session.query(Subject).all()
 
     if request.method == 'POST':
         student_id = request.form['student_id']
-        subject_id = request.form['subject_id']  # ID da disciplina
+        subject_id = request.form['subject_id']
         grade_value = request.form['grade']
 
-        # Verificar se os dados são válidos
         if not student_id or not subject_id or not grade_value:
             flash('Todos os campos são obrigatórios!', 'danger')
             return redirect(url_for('add_grades.add_grade'))
 
-        # Adicionar a nova nota
         new_grade = Grade(student_id=student_id, subject_id=subject_id, grade=float(grade_value))
         session.add(new_grade)
         session.commit()

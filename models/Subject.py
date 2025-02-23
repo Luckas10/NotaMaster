@@ -6,7 +6,10 @@ class Subject(Base):
     __tablename__ = 'subjects'
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
-    name: Mapped[str] = mapped_column(String(100), nullable=False, unique=True)  # Nome da disciplina
+    name: Mapped[str] = mapped_column(String(100), nullable=False, unique=True)
 
-    # Relacionamento com Grade (muitas notas podem pertencer a uma disciplina)
     grades = relationship("Grade", back_populates="subject")
+
+    # Novo relacionamento para matrículas
+    enrollments = relationship("Enrollment", back_populates="subject")
+    

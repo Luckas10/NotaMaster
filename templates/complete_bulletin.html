@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Boletim Completo</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+
+<div class="container mt-5">
+    <h1>Boletim Completo - {{ current_user.username }}</h1>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Disciplina</th>
+                <th>Nota</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for enrollment in enrollments %}
+            <tr>
+                <td>{{ enrollment.subject.name }}</td>
+                {% set grade = None %}
+                {# Procura a nota correspondente a essa disciplina #}
+                {% for g in enrollment.student.grades %}
+                    {% if g.subject_id == enrollment.subject_id %}
+                        {% set grade = g %}
+                    {% endif %}
+                {% endfor %}
+                <td>
+                    {% if grade %}
+                        {{ grade.grade }}
+                    {% else %}
+                        Sem nota
+                    {% endif %}
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ url_for('dashboard.dashboard') }}" class="btn btn-secondary">Voltar</a>
+</div>
+
+</body>
+</html>

@@ -13,3 +13,6 @@ class User(Base, UserMixin):
 
     complaints = relationship("Complaint", back_populates="student")
     grades = relationship("Grade", back_populates="student")
+
+    # Novo relacionamento para matrículas
+    enrollments = relationship("Enrollment", back_populates="student")
